@@ -1,36 +1,36 @@
 import React from 'react';
 
 class Bomb extends React.Component {
-    constructor(props) {
-        super(props)
-        this.setState =({count: 0})  
+    state = {
+        count: 0 
     }
     componentDidMount() {
         console.log('componentDidMount')
         this.interval = setInterval(() => {
             this.setState ({
-                datetime: new Date()
+                count: this.state.count + 1
             })
         }, 1000)
     }
     componentWillUnmount() {
         clearInterval(this.interval)
     }
-    divisibleBy2 = () => {
-        if ( new Date % 2 === 0) {
-            return 'tick';
-        }
-    }
-    notDivisibleBy2 = () => {
-        if (new Date % 2 !==0) {
+    display() {
+        const {count} = this.state
+        if (count >= 8) {
+            clearInterval(this.interval)
+            return 'BOOM!!!!!'
+        } else if (count % 2 ===0) {
+            return 'tick'
+        } else {
             return 'tock'
         }
     }
-    
+
     render() {
         return(
             <div>
-                <p>{this.state.count.toLocaleDateString()}</p>
+                <p>{this.display()}</p>
             </div>
         )
     }
